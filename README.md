@@ -69,10 +69,10 @@ SafePay is a comprehensive fraud detection and prevention platform that uses adv
 ## 🔧 Setup and Installation
 
 ### Prerequisites
-- Replit account
+- Replit account for cloud deployment
 - Groq API key or OpenAI API key
 
-### Installation
+### Replit Installation
 
 1. Fork this Repl
 2. Add your environment variables in the Secrets tab:
@@ -82,6 +82,22 @@ SafePay is a comprehensive fraud detection and prevention platform that uses adv
    - `DATABASE_URL`: Your database URL (provided by Replit)
 
 3. Click the Run button to start the development server
+
+### Local Development with VS Code
+
+For detailed instructions on setting up a local development environment with VS Code, please see [VSCODE_DEVELOPMENT.md](VSCODE_DEVELOPMENT.md).
+
+### Docker Setup
+
+For containerized development, you can use Docker:
+
+```bash
+# Build and start all services
+docker-compose up
+
+# Or build and run in background
+docker-compose up -d
+```
 
 ## 📱 Usage Flow
 
