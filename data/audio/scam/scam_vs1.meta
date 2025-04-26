@@ -1,0 +1,7 @@
+source_video: ./data/scam/vs1.mp4
+voice_optimized: False
+fps: 30.0
+frame_count: 82
+duration: 2.7333333333333334 seconds
+face_detected: True
+is_scam: True

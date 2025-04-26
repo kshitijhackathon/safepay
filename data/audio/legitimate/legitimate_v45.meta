@@ -1,0 +1,7 @@
+source_video: ./data/legitimate/v45.mp4
+voice_optimized: False
+fps: 30.0
+frame_count: 101
+duration: 3.3666666666666667 seconds
+face_detected: True
+is_scam: False

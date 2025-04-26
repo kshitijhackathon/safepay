@@ -1,0 +1,11 @@
+City,State,Scam Cases,Latitude,Longitude,Last Reported Date,UPI_Fraud,Fake_Store,Phishing,Investment,QR_Code,Others
+New Delhi,Delhi,450,28.6139,77.2090,2025-04-15,135,90,68,76,45,36
+Mumbai,Maharashtra,620,19.0760,72.8777,2025-04-12,248,62,93,124,62,31
+Bengaluru,Karnataka,300,12.9716,77.5946,2025-04-10,90,60,45,45,36,24
+Kolkata,West Bengal,280,22.5726,88.3639,2025-04-11,98,42,56,28,42,14
+Chennai,Tamil Nadu,400,13.0827,80.2707,2025-04-13,140,80,60,60,40,20
+Hyderabad,Telangana,180,17.3850,78.4867,2025-04-17,54,36,27,27,18,18
+Jaipur,Rajasthan,120,26.9124,75.7873,2025-04-14,42,24,18,12,12,12
+Ahmedabad,Gujarat,220,23.0225,72.5714,2025-04-09,88,33,33,22,22,22
+Pune,Maharashtra,230,18.5204,73.8567,2025-04-08,92,46,23,34,23,12
+Lucknow,Uttar Pradesh,150,26.8467,80.9462,2025-04-16,45,30,30,15,15,15
