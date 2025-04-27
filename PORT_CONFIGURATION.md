@@ -4,12 +4,12 @@ This document outlines the standardized port configuration for the SafePay UPI S
 
 ## Port Assignments
 
-| Service                | Port | Environment Variable       |
-|------------------------|------|----------------------------|
-| Main Express Server    | 8080 | PORT                       |
-| ML QR Service          | 8081 | ML_QR_SERVICE_PORT         |
-| ML Voice/Text Service  | 8082 | ML_VOICE_TEXT_SERVICE_PORT |
-| ML Video Service       | 8083 | ML_VIDEO_SERVICE_PORT      |
+| Service                | Port | Environment Variable       | Notes                          |
+|------------------------|------|----------------------------|--------------------------------|
+| Main Express Server    | 5000 | PORT                       | For Replit workflow compatibility |
+| ML QR Service          | 8081 | ML_QR_SERVICE_PORT         |                                |
+| ML Voice/Text Service  | 8082 | ML_VOICE_TEXT_SERVICE_PORT |                                |
+| ML Video Service       | 8083 | ML_VIDEO_SERVICE_PORT      |                                |
 
 ## Implementation Details
 
@@ -33,9 +33,13 @@ Updated with consistent port configurations matching .env.example.
 ### Server Files
 
 #### server/index.ts
-Updated to use the PORT environment variable with a default of 8080:
+Updated to use port 5000 for Replit workflow compatibility:
 ```javascript
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+// For Replit workflow compatibility, force port to 5000
+// This is needed for the Replit workflow to detect the running server
+const PORT = 5000;
+  
+// Start the server on port 5000 for Replit workflow detection
 server.listen(PORT, "0.0.0.0", () => {
   log(`[express] Server running on port ${PORT}`);
 });

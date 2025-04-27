@@ -72,11 +72,11 @@ run = "npm run start"
 
 # Workflow configuration
 [workflow]
-defaultPort = 8080
+defaultPort = 5000
 
 # Environment variables for deployment
 [env]
-PORT = "8080"
+PORT = "5000"
 NODE_ENV = "production"
 ML_QR_SERVICE_PORT = "8081"
 ML_VOICE_TEXT_SERVICE_PORT = "8082"

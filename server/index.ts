@@ -60,11 +60,11 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Use a single port configuration throughout the application
-  // First check process.env.PORT (for environment compatibility)
-  // Default to Replit's standard port if not specified
-  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+  // For Replit workflow compatibility, force port to 5000
+  // This is needed for the Replit workflow to detect the running server
+  const PORT = 5000;
   
+  // Start the server on port 5000 for Replit workflow detection
   server.listen(PORT, "0.0.0.0", () => {
     log(`[express] Server running on port ${PORT}`);
   });
