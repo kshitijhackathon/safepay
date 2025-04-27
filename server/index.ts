@@ -62,10 +62,30 @@ app.use((req, res, next) => {
 
   // For Replit workflow compatibility, force port to 5000
   // This is needed for the Replit workflow to detect the running server
-  const PORT = 5000;
+  const PORT = process.env.PORT || 5000;
 
-  // Start the server on port 5000 for Replit workflow detection
+  // Start the server with error handling
   server.listen(PORT, "0.0.0.0", () => {
     log(`[express] Server running on port ${PORT}`);
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      log(`[express] Port ${PORT} is already in use. Trying to close existing connections...`);
+      // Kill any existing process on this port
+      const killCommand = `lsof -t -i:${PORT} | xargs -r kill -9`;
+      require('child_process').exec(killCommand, (error) => {
+        if (error) {
+          log('[express] Failed to kill process:', error);
+          return;
+        }
+        // Retry starting server
+        setTimeout(() => {
+          server.listen(PORT, "0.0.0.0", () => {
+            log(`[express] Server successfully restarted on port ${PORT}`);
+          });
+        }, 1000);
+      });
+    } else {
+      log('[express] Server error:', err);
+    }
   });
 })();
