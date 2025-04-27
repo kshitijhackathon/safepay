@@ -8,44 +8,38 @@ build/
 # cache
 .cache/
 .npm/
-cache/
-prediction_cache/
 
 # logs
 logs/
 *.log
 
 # media and datasets
-*.mp4
-*.mov
 *.mp3
-*.wav
 *.csv
 *.json.gz
-
-# ML model files
-*.h5
-*.pkl
-*.pt
-*.pth
-*.onnx
 
 # Python
 __pycache__/
 *.py[cod]
 *.so
 .Python
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 .pythonlibs/
+cache/
+prediction_cache/
+
+# ML artifacts
+*.pth
+*.pt
+*.onnx
+*.h5
+*.joblib
+
+# Large data
+data/
+*.zip
+*.mp4
+*.wav
 
 # Development files
 .vscode/
 .github/
-
-# Large files
-mydata.zip
-data/
