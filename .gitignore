@@ -1,129 +1,51 @@
-# Dependencies
+# dependencies
 node_modules/
-.pnp/
-.pnp.js
 
-# Env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# build outputs
+dist/
+build/
 
-# Python files
+# cache
+.cache/
+.npm/
+cache/
+prediction_cache/
+
+# logs
+logs/
+*.log
+
+# media and datasets
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.csv
+*.json.gz
+
+# ML model files
+*.h5
+*.pkl
+*.pt
+*.pth
+*.onnx
+
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
 .Python
 env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pythonlibs/
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Build outputs
-dist
-dist-ssr
-*.local
-
-# Database
-*.sqlite
-*.db
-
-# Testing
-coverage
-.nyc_output
-htmlcov/
-.pytest_cache/
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/launch.json
-!.vscode/tasks.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Temporary files
-tmp/
-temp/
-*.tmp
-*.temp
-
-# Cache directories
-.cache/
-.parcel-cache/
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# ML model temporary files
-model_cache/
-prediction_cache/
-audio_temp/
-
-# Replit specific
-.replit
-replit.nix
-.cache/
-.upm/
+# Development files
+.vscode/
+.github/
 
 # Large files
-*.mp4
-*.wav
-*.mp3
-*.avi
-*.webm
-!attached_assets/*.mp4
-!attached_assets/*.wav
-!attached_assets/*.mp3
-
-# Local development-only files
-.dev/
-local_scripts/
-
-node_modules/
-dist/
-.env
-*.pyc
-__pycache__/
-.DS_Store
-data/audio/
-data/legitimate/
-data/scam/
-models/
-attached_assets/
-migrations/
-cache/
-prediction_cache/
-*.mp4
-*.joblib
-*.pkl
 mydata.zip
+data/

@@ -93,6 +93,10 @@ The application uses a standardized port configuration:
 
 For detailed port configuration documentation, see [PORT_CONFIGURATION.md](PORT_CONFIGURATION.md).
 
+### Deployment
+
+For detailed deployment instructions, including port mapping, environment variables, and file size optimization, please see [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md).
+
 ### Local Development with VS Code
 
 For detailed instructions on setting up a local development environment with VS Code, please see [VSCODE_DEVELOPMENT.md](VSCODE_DEVELOPMENT.md).

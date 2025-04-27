@@ -101,15 +101,38 @@ uvicorn.run(app, host="0.0.0.0", port=port)
 #### .replit.deploy
 ```
 [env]
-PORT = "8080"
+PORT = "5000"
 NODE_ENV = "production"
 ML_QR_SERVICE_PORT = "8081"
 ML_VOICE_TEXT_SERVICE_PORT = "8082"
 ML_VIDEO_SERVICE_PORT = "8083"
 
 [workflow]
-defaultPort = 8080
+defaultPort = 5000
 ```
+
+#### Recommended Port Mapping in .replit
+The .replit file should be updated with the following port mappings:
+
+```
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 8081
+externalPort = 8081
+
+[[ports]]
+localPort = 8082
+externalPort = 8082
+
+[[ports]]
+localPort = 8083
+externalPort = 8083
+```
+
+Note: Remove all other port mappings to reduce deployment image size.
 
 ## Troubleshooting
 
