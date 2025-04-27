@@ -1,59 +1,31 @@
-modules = ["nodejs-20", "web", "postgresql-16", "python-3.11", "python3"]
+modules = ["nodejs-20", "web", "postgresql-16", "python-3.11"]
 run = "npm run dev"
-hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist", "client/src/data", "migrations"]
 
 [nix]
 channel = "stable-24_05"
 packages = ["cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "gobject-introspection", "gtk3", "libGL", "libGLU", "libjpeg_turbo", "libpng", "libsndfile", "libxcrypt", "pkg-config", "qhull", "tcl", "tk", "which"]
 
 [deployment]
-deploymentTarget = "gce"
+deploymentTarget = "autoscale"
 build = ["sh", "-c", "npm run build"]
 run = ["sh", "-c", "NODE_ENV=production node dist/index.js"]
-
-[[ports]]
-localPort = 3000
-externalPort = 3000
-
-[[ports]]
-localPort = 3001
-externalPort = 3002
 
 [[ports]]
 localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 5001
-externalPort = 3001
-
-[[ports]]
-localPort = 5050
-externalPort = 4200
-
-[[ports]]
-localPort = 5123
-externalPort = 3003
-
-[[ports]]
-localPort = 8000
-externalPort = 8000
-
-[[ports]]
-localPort = 8001
-externalPort = 5000
-
-[[ports]]
-localPort = 8080
-externalPort = 8080
+localPort = 8081
+externalPort = 8081
 
 [[ports]]
 localPort = 8082
-externalPort = 6000
+externalPort = 8082
 
 [[ports]]
-localPort = 8100
-externalPort = 5173
+localPort = 8083
+externalPort = 8083
 
 [workflows]
 runButton = "Start Dev Server"
