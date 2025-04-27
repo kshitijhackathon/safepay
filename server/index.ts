@@ -63,7 +63,7 @@ app.use((req, res, next) => {
   // For Replit workflow compatibility, force port to 5000
   // This is needed for the Replit workflow to detect the running server
   const PORT = 5000;
-  
+
   // Start the server on port 5000 for Replit workflow detection
   server.listen(PORT, "0.0.0.0", () => {
     log(`[express] Server running on port ${PORT}`);

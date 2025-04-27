@@ -108,3 +108,22 @@ replit.nix
 # Local development-only files
 .dev/
 local_scripts/
+
+node_modules/
+dist/
+.env
+*.pyc
+__pycache__/
+.DS_Store
+data/audio/
+data/legitimate/
+data/scam/
+models/
+attached_assets/
+migrations/
+cache/
+prediction_cache/
+*.mp4
+*.joblib
+*.pkl
+mydata.zip
