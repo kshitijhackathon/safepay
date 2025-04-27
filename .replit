@@ -7,7 +7,7 @@ channel = "stable-24_05"
 packages = ["cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "gobject-introspection", "gtk3", "libGL", "libGLU", "libjpeg_turbo", "libpng", "libsndfile", "libxcrypt", "pkg-config", "qhull", "tcl", "tk", "which"]
 
 [deployment]
-deploymentTarget = "autoscale"
+deploymentTarget = "gce"
 build = ["sh", "-c", "npm run build"]
 run = ["sh", "-c", "NODE_ENV=production node dist/index.js"]
 

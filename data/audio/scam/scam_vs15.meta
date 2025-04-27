@@ -1,7 +1,0 @@
-source_video: ./data/scam/vs15.mp4
-voice_optimized: False
-fps: 30.0
-frame_count: 64
-duration: 2.1333333333333333 seconds
-face_detected: True
-is_scam: True
