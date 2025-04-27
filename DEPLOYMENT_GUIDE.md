@@ -151,9 +151,27 @@ If you encounter deployment issues:
    - Ensure that external ports are correctly mapped
 
 2. **Deployment Size Issues**:
-   - The deployment size should be under 8GB
-   - If the deployment fails due to size, check `.replit.deploy` and `.gitignore` for proper exclusions
-   - Consider removing unnecessary dependencies and assets
+   - The deployment size must be under 8GB (current size with large directories is approximately 5.9GB)
+   - Key large directories to exclude:
+     - `.pythonlibs/` (5.1GB)
+     - `node_modules/` (740MB)
+     - `data/` (31MB)
+   - Important: You must manually edit the `.replit` file using the Replit UI and add the following lines:
+     ```
+     [packaging]
+     ignoredPaths = [
+       ".pythonlibs/",
+       "node_modules/",
+       "data/",
+       "mydata.zip",
+       "attached_assets/*.mp4",
+       "attached_assets/*.wav",
+       "attached_assets/*.mp3",
+       "cache/",
+       "prediction_cache/"
+     ]
+     ```
+   - This configuration is critical for deployment and cannot be added via automation
 
 3. **Application Not Starting**:
    - Check the deployment logs for error messages

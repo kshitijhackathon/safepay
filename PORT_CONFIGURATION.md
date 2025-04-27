@@ -111,10 +111,12 @@ ML_VIDEO_SERVICE_PORT = "8083"
 defaultPort = 5000
 ```
 
-#### Recommended Port Mapping in .replit
-The .replit file should be updated with the following port mappings:
+#### CRITICAL: Port Mapping in .replit
+You must manually update the .replit file using the Replit UI with the EXACT port mappings below:
 
 ```
+# IMPORTANT: DELETE ALL EXISTING PORT MAPPINGS FIRST
+
 [[ports]]
 localPort = 5000
 externalPort = 80
@@ -132,7 +134,11 @@ localPort = 8083
 externalPort = 8083
 ```
 
-Note: Remove all other port mappings to reduce deployment image size.
+**WARNING**: 
+1. The mapping of `localPort = 5000` to `externalPort = 80` is CRITICAL for deployment.
+2. Remove ALL other port mappings to reduce deployment image size.
+3. Do not include duplicate port entries as this will cause deployment errors.
+4. The server is configured to run on port 5000 in server/index.ts, so this must match the localPort.
 
 ## Troubleshooting
 
