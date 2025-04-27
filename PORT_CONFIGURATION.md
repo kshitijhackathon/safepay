@@ -18,7 +18,7 @@ This document outlines the standardized port configuration for the SafePay UPI S
 #### .env.example
 ```
 # Server Configuration
-PORT=8080
+PORT=5000
 NODE_ENV="development"
 
 # ML Service Ports - must be different from main PORT
