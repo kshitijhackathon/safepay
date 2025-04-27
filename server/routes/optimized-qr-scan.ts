@@ -7,7 +7,7 @@ const router = Router();
 
 // QR ML Service URL
 // Use environment variable for port or fall back to a default
-const QR_ML_SERVICE_PORT = process.env.QR_MODEL_PORT || 5050;
+const QR_ML_SERVICE_PORT = process.env.ML_QR_SERVICE_PORT || 8081;
 const QR_ML_SERVICE_URL = `http://localhost:${QR_ML_SERVICE_PORT}`;
 
 /**
