@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 
   // For Replit workflow compatibility, force port to 5000
   // This is needed for the Replit workflow to detect the running server
-  const PORT = process.env.PORT || 5000;
+  const PORT = 5000; // Force port to 5000 regardless of env variable
 
   // Start the server with error handling
   server.listen(PORT, "0.0.0.0", () => {
