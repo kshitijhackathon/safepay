@@ -86,7 +86,7 @@ SafePay is a comprehensive fraud detection and prevention platform that uses adv
 ### Port Configuration
 
 The application uses a standardized port configuration:
-- Main Server: 8080 (Express)
+- Main Server: 5000 (Express)
 - QR ML Service: 8081 (FastAPI/Flask)
 - Voice/Text ML Service: 8082 (FastAPI)
 - Video ML Service: 8083 (FastAPI)
