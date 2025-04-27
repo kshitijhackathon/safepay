@@ -162,6 +162,10 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
   // Process detected QR code data with ML-powered analysis
   const processQrCode = async (qrData: string) => {
     console.log('QR code detected:', qrData);
+    // Stop camera immediately after detection
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+    }
     setScanProgress(70); // Update progress to show we're analyzing
     
     // Extract payment info using our utility
@@ -538,7 +542,7 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
               <canvas ref={canvasRef} className="hidden" />
               
               {isScanning && !scanComplete && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black">
                   <div className="w-16 h-16 mb-4">
                     <svg className="w-full h-full animate-pulse" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M3 9V5.25C3 4.00736 4.00736 3 5.25 3H9M9 21H5.25C4.00736 21 3 19.9926 3 18.75V15M21 15V18.75C21 19.9926 19.9926 21 18.75 21H15M15 3H18.75C19.9926 3 21 4.00736 21 5.25V9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -550,7 +554,7 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
                       style={{ width: `${scanProgress}%` }}
                     />
                   </div>
-                  <p className="text-white text-sm">Scanning QR code...</p>
+                  <p className="text-white text-sm">Processing QR code...</p>
                 </div>
               )}
               
