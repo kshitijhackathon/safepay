@@ -32,8 +32,8 @@ interface MLTextAnalysisResponse {
 }
 
 // Service configuration
-// Use 8100 as the default - this avoids conflicts with common server ports (3000, 5000, 8000)
-const VOICE_TEXT_ML_SERVICE_PORT = process.env.VOICE_TEXT_ML_SERVICE_PORT || 8100;
+// Use 8082 as the default - this avoids conflicts with common server ports (3000, 5000, 8000, 8080)
+const VOICE_TEXT_ML_SERVICE_PORT = process.env.ML_VOICE_TEXT_SERVICE_PORT || 8082;
 const ML_SERVICE_URL = `http://localhost:${VOICE_TEXT_ML_SERVICE_PORT}`;
 
 // Configure multer for audio file uploads

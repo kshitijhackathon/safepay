@@ -201,8 +201,8 @@ async def generic_exception_handler(request: Request, exc: Exception):
 # Main function to start the server
 def start_server():
     """Start the FastAPI server"""
-    # Determine the port, with fallback to 8100 (same as in voice-text-ml.ts)
-    port = int(os.getenv("VOICE_TEXT_ML_SERVICE_PORT", 8100))
+    # Determine the port, with fallback to 8082 (same as in voice-text-ml.ts)
+    port = int(os.getenv("ML_VOICE_TEXT_SERVICE_PORT", 8082))
     
     print(f"Starting Voice and Text Scam Detection API on port {port}...")
     uvicorn.run("voice_text_scam_service:app", host="0.0.0.0", port=port, reload=False)

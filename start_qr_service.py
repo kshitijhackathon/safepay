@@ -19,8 +19,9 @@ def start_service():
     
     # Launch the service
     try:
+        port = os.environ.get("ML_QR_SERVICE_PORT", "8081")
         process = subprocess.Popen(['python', 'qr_scam_service.py'])
-        print(f"QR Scam Detection Service started on port 8000 (PID: {process.pid})")
+        print(f"QR Scam Detection Service started on port {port} (PID: {process.pid})")
         
         # Keep the script running to maintain the service
         while True:

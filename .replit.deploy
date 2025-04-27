@@ -70,6 +70,10 @@ include = [
 # Run command for deployment
 run = "npm run start"
 
+# Workflow configuration
+[workflow]
+defaultPort = 8080
+
 # Environment variables for deployment
 [env]
 PORT = "8080"

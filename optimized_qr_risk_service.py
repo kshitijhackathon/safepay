@@ -188,7 +188,7 @@ async def train():
 
 def start_server():
     """Start the FastAPI server"""
-    port = int(os.environ.get("QR_MODEL_PORT", 5050))
+    port = int(os.environ.get("ML_QR_SERVICE_PORT", 8081))
     uvicorn.run(app, host="0.0.0.0", port=port)
 
 if __name__ == "__main__":

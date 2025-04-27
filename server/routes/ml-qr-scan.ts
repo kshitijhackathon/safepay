@@ -7,7 +7,7 @@ import { Express, Request, Response } from 'express';
 
 // ML service URL 
 // Use consistent port configuration
-const QR_ML_SERVICE_PORT = process.env.QR_MODEL_PORT || 5050;
+const QR_ML_SERVICE_PORT = process.env.ML_QR_SERVICE_PORT || 8081;
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || `http://localhost:${QR_ML_SERVICE_PORT}`;
 
 // Fallback ML analysis for when service is unreachable

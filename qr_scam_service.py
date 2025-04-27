@@ -160,4 +160,5 @@ def health_check():
 
 if __name__ == '__main__':
     # In production, configure appropriate host and port
-    app.run(host='0.0.0.0', port=8000, debug=False)
+    port = int(os.environ.get("ML_QR_SERVICE_PORT", 8081))
+    app.run(host='0.0.0.0', port=port, debug=False)

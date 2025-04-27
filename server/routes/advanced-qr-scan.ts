@@ -12,7 +12,8 @@ import { spawn } from 'child_process';
 const router = Router();
 
 // QR ML Service URL
-const QR_ML_SERVICE_URL = 'http://localhost:8000';
+const QR_ML_SERVICE_PORT = process.env.ML_QR_SERVICE_PORT || 8081;
+const QR_ML_SERVICE_URL = `http://localhost:${QR_ML_SERVICE_PORT}`;
 let serviceProcess: any = null;
 
 // Ensure service is running

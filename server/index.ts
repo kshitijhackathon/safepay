@@ -63,9 +63,9 @@ app.use((req, res, next) => {
   // Use a single port configuration throughout the application
   // First check process.env.PORT (for environment compatibility)
   // Default to Replit's standard port if not specified
-  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
   
   server.listen(PORT, "0.0.0.0", () => {
-    log(`Server running on port ${PORT}`);
+    log(`[express] Server running on port ${PORT}`);
   });
 })();

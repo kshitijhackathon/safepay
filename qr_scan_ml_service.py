@@ -12,6 +12,7 @@ import re
 import time
 import json
 import asyncio
+import os
 from collections import deque
 from diskcache import Cache
 from typing import Optional, Dict, List, Any
@@ -267,4 +268,5 @@ async def generic_exception_handler(request, exc):
     }
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("ML_QR_SERVICE_PORT", 8081))
+    uvicorn.run(app, host="0.0.0.0", port=port)

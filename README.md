@@ -83,6 +83,16 @@ SafePay is a comprehensive fraud detection and prevention platform that uses adv
 
 3. Click the Run button to start the development server
 
+### Port Configuration
+
+The application uses a standardized port configuration:
+- Main Server: 8080 (Express)
+- QR ML Service: 8081 (FastAPI/Flask)
+- Voice/Text ML Service: 8082 (FastAPI)
+- Video ML Service: 8083 (FastAPI)
+
+For detailed port configuration documentation, see [PORT_CONFIGURATION.md](PORT_CONFIGURATION.md).
+
 ### Local Development with VS Code
 
 For detailed instructions on setting up a local development environment with VS Code, please see [VSCODE_DEVELOPMENT.md](VSCODE_DEVELOPMENT.md).
