@@ -42,6 +42,7 @@ import MyReports from "@/pages/my-reports";
 import VideoDetectionPage from "@/pages/video-detection-page";
 import ScamDetectionPage from "@/pages/scam-detection-page";
 import QRScan from "@/pages/qr-scan";
+import ManualUpiEntry from "@/pages/manual-upi-entry";
 import AllServices from "@/pages/all-services";
 import VideoCheck from "@/pages/video-check";
 import CallCheck from "@/pages/call-check";
@@ -67,6 +68,7 @@ function Router() {
         {() => <Scan />}
       </Route>
       <Route path="/qr-scan" component={QRScan} />
+      <Route path="/manual-upi-entry" component={ManualUpiEntry} />
       <Route path="/simplified-scan" component={Scan} />
       <Route path="/confirm-transaction" component={ConfirmTransaction} />
       <Route path="/payment" component={Payment} />
