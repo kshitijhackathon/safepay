@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, Camera, Check, Flashlight, X, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Camera, Check, Flashlight, X, ShieldAlert, ShieldCheck, Keyboard, Type } from 'lucide-react';
 import jsQR from 'jsqr';
 import { BrowserMultiFormatReader, DecodeHintType, BarcodeFormat } from '@zxing/library';
 import { analyzeQRWithML, extractUPIPaymentInfo, QRScanResult } from '@/lib/ml-qr-scanner';
@@ -589,7 +589,7 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
                 onClick={() => setManualEntry(true)}
                 className="w-12 h-12 bg-white rounded-full flex items-center justify-center"
               >
-                <Camera className="w-6 h-6 text-black" />
+                <Keyboard className="w-6 h-6 text-black" />
               </button>
             </div>
             
