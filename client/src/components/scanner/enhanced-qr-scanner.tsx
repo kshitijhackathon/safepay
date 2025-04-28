@@ -630,12 +630,12 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
                 </div>
               )}
               
-              {/* Manual UPI entry option */}
+              {/* Manual UPI entry option - Made more prominent */}
               <button
                 onClick={() => setManualEntry(true)}
-                className="text-white flex items-center justify-center gap-2 mt-2"
+                className="bg-white text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2 mt-3 py-3 rounded-lg font-medium w-full border-2 border-white shadow-md"
               >
-                Enter UPI ID manually
+                <Keyboard className="w-5 h-5" /> Enter UPI ID manually
               </button>
             </div>
           </div>
