@@ -39,6 +39,7 @@ interface TransactionHistoryItem {
 
 export default function Success() {
   const [location, setLocation] = useLocation();
+  const [showSuccessToast, setShowSuccessToast] = useState(true);
   const [transactionDetails, setTransactionDetails] = useState<TransactionDetails>({
     amount: '0.00',
     to: '',
@@ -55,6 +56,15 @@ export default function Success() {
     app: 'UPI App'
   });
 
+  // Auto-dismiss the success toast after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSuccessToast(false);
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
   // Extract transaction details from URL query parameters
   useEffect(() => {
     try {
@@ -68,6 +78,7 @@ export default function Success() {
       const fromUpiId = params.get('fromUpiId');
       const txnId = params.get('txnId') || params.get('paymentIntentId');
       const app = params.get('app') || params.get('paymentMethod') || 'Card';
+      const note = params.get('note');
       
       // Check if we have a stripe payment
       const isStripePayment = params.get('paymentMethod') === 'stripe' || app === 'card' || app === 'Card';
@@ -79,30 +90,52 @@ export default function Success() {
       const formattedDate = formatDate(new Date());
       
       // Log the data received from URL for debugging
-      console.log('Transaction data from URL:', { amount, to, upiId, fromUpiId, txnId, app });
+      console.log('Transaction data from URL:', { amount, to, upiId, fromUpiId, txnId, app, note });
       
-      // Update transaction details with URL params if available
+      // If we don't have parameters in the URL, try to get data from session storage
+      let lastPayment = null;
+      try {
+        const lastPaymentJson = sessionStorage.getItem('lastPayment');
+        if (lastPaymentJson) {
+          lastPayment = JSON.parse(lastPaymentJson);
+          console.log('Retrieved payment details from session storage:', lastPayment);
+        }
+      } catch (err) {
+        console.error('Error retrieving payment from session storage:', err);
+      }
+      
+      // Update transaction details with URL params if available, or fallback to session storage
       setTransactionDetails((current) => ({
         ...current,
-        amount: amount || current.amount,
-        to: to || current.to,
-        upiId: upiId || current.upiId,
-        fromUpiId: fromUpiId || '',
+        amount: amount || (lastPayment?.amount) || current.amount,
+        to: to || (lastPayment?.merchantName) || current.to,
+        upiId: upiId || (lastPayment?.upiId) || current.upiId,
+        fromUpiId: fromUpiId || (lastPayment?.fromUpiId) || '',
         transactionId: finalTxnId,
         date: formattedDate,
-        app: isStripePayment ? 'Credit/Debit Card' : (app || current.app)
+        app: isStripePayment ? 'Credit/Debit Card' : (app || (lastPayment?.app) || current.app)
       }));
       
       // Save transaction to history in local storage
+      const finalAmount = amount || (lastPayment?.amount) || transactionDetails.amount;
+      const finalTo = to || (lastPayment?.merchantName) || transactionDetails.to;
+      const finalUpiId = upiId || (lastPayment?.upiId) || transactionDetails.upiId;
+      const finalFromUpiId = fromUpiId || (lastPayment?.fromUpiId) || '';
+      const finalApp = isStripePayment ? 'Credit/Debit Card' : (app || (lastPayment?.app) || transactionDetails.app);
+      
       saveTransactionToHistory({
-        amount: amount || transactionDetails.amount, // Keep as string, will be parsed later
-        to: to || transactionDetails.to,
-        upiId: upiId || transactionDetails.upiId,
-        fromUpiId: fromUpiId || '',
+        amount: finalAmount,
+        to: finalTo,
+        upiId: finalUpiId,
+        fromUpiId: finalFromUpiId,
         transactionId: finalTxnId,
-        app: isStripePayment ? 'Credit/Debit Card' : (app || transactionDetails.app),
+        app: finalApp,
         date: new Date() // Date object for formatting
       });
+      
+      // Clear the session storage after using it
+      sessionStorage.removeItem('lastPayment');
+      
     } catch (error) {
       console.error('Error parsing transaction details:', error);
     }
@@ -165,6 +198,27 @@ export default function Success() {
       
       <h1 className="text-2xl font-bold mb-2">Payment Successful!</h1>
       <p className="text-gray-500 mb-6">Your transaction has been completed</p>
+      
+      {/* Success toast message */}
+      {showSuccessToast && (
+        <div className="fixed top-4 left-4 right-4 bg-white rounded-xl shadow-lg p-4 mb-6 flex items-start z-50">
+          <div className="bg-green-100 rounded-full p-2 mr-3">
+            <Check className="w-5 h-5 text-green-600" />
+          </div>
+          <div className="flex-1">
+            <p className="font-bold">Payment Successful</p>
+            <p className="text-sm text-gray-600">
+              Your payment of {formatCurrency(parseFloat(transactionDetails.amount.toString()))} to {transactionDetails.to} has been processed successfully.
+            </p>
+          </div>
+          <button 
+            onClick={() => setShowSuccessToast(false)}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       
       <Card className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 w-full mb-8">
         <div className="flex justify-between mb-3">
