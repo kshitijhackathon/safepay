@@ -90,6 +90,18 @@ export default function Payment() {
     
     // For UPI payment apps, we would prepare deep links in a real app
     // For demo, we'll just navigate to the transaction success screen
+    
+    // Generate a unique transaction ID
+    const transactionId = `STRIPE-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+    
+    // Format current date
+    const formattedDate = new Date().toLocaleString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+    
+    // Create complete payment details
     const paymentDetails = {
       upiId,
       merchantName,
@@ -98,26 +110,17 @@ export default function Payment() {
       app: selectedApp,
       safetyScore,
       timestamp: new Date().toISOString(),
+      transactionId: transactionId,
+      date: formattedDate,
+      fromUpiId: authState.phoneNumber ? `${authState.phoneNumber.replace(/\D/g, '').slice(-10)}@ybl` : 'yourname@okhdfc'
     };
     
-    // Store payment details in session storage for the success screen
+    // Store complete payment details in session storage for the success screen
     sessionStorage.setItem('lastPayment', JSON.stringify(paymentDetails));
     
-    // Create URL params for success page with all the correct payment info
-    const successParams = new URLSearchParams();
-    successParams.append('amount', amount); // Actual entered amount
-    successParams.append('app', selectedApp || '');
-    successParams.append('merchantName', merchantName); // Actual merchant name
-    successParams.append('upiId', upiId); // Actual UPI ID
-    successParams.append('fromUpiId', authState.phoneNumber ? `${authState.phoneNumber.replace(/\D/g, '').slice(-10)}@ybl` : 'yourname@okhdfc');
-    
-    // Add the user's note if provided
-    if (note) {
-      successParams.append('note', note);
-    }
-    
-    // Navigate to success screen with complete details
-    setLocation(`/success?${successParams.toString()}`);
+    // Navigate to success screen without query parameters
+    // We'll rely solely on session storage to avoid URL parameter issues
+    setLocation(`/success`);
   };
   
   const handleBack = () => {

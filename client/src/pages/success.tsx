@@ -65,81 +65,63 @@ export default function Success() {
     return () => clearTimeout(timer);
   }, []);
   
-  // Extract transaction details from URL query parameters
+  // Extract transaction details from session storage
   useEffect(() => {
     try {
-      // Use our utility function to safely parse URL params
-      const params = parseUrlParams(location);
+      // Get payment details from session storage
+      const lastPaymentJson = sessionStorage.getItem('lastPayment');
+      console.log('Last payment JSON:', lastPaymentJson);
       
-      // Get parameters from URL
-      const amount = params.get('amount');
-      const to = params.get('merchantName') || params.get('to');
-      const upiId = params.get('upiId');
-      const fromUpiId = params.get('fromUpiId');
-      const txnId = params.get('txnId') || params.get('paymentIntentId');
-      const app = params.get('app') || params.get('paymentMethod') || 'Card';
-      const note = params.get('note');
-      
-      // Check if we have a stripe payment
-      const isStripePayment = params.get('paymentMethod') === 'stripe' || app === 'card' || app === 'Card';
-      
-      // Create a transaction ID if none was provided
-      const finalTxnId = txnId || generateTransactionId(isStripePayment ? 'STRIPE' : 'UPI');
-      
-      // Format date using our utility
-      const formattedDate = formatDate(new Date());
-      
-      // Log the data received from URL for debugging
-      console.log('Transaction data from URL:', { amount, to, upiId, fromUpiId, txnId, app, note });
-      
-      // If we don't have parameters in the URL, try to get data from session storage
-      let lastPayment = null;
-      try {
-        const lastPaymentJson = sessionStorage.getItem('lastPayment');
-        if (lastPaymentJson) {
-          lastPayment = JSON.parse(lastPaymentJson);
-          console.log('Retrieved payment details from session storage:', lastPayment);
-        }
-      } catch (err) {
-        console.error('Error retrieving payment from session storage:', err);
+      if (lastPaymentJson) {
+        // Parse the payment details
+        const lastPayment = JSON.parse(lastPaymentJson);
+        console.log('Retrieved payment details from session storage:', lastPayment);
+        
+        // Update transaction details with session storage data
+        setTransactionDetails({
+          amount: lastPayment.amount || '0.00',
+          to: lastPayment.merchantName || '',
+          upiId: lastPayment.upiId || '',
+          fromUpiId: lastPayment.fromUpiId || '',
+          transactionId: lastPayment.transactionId || `STRIPE-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+          date: lastPayment.date || formatDate(new Date()),
+          app: lastPayment.app || 'Credit/Debit Card'
+        });
+        
+        // Save transaction to history in local storage
+        saveTransactionToHistory({
+          amount: lastPayment.amount,
+          to: lastPayment.merchantName,
+          upiId: lastPayment.upiId,
+          fromUpiId: lastPayment.fromUpiId,
+          transactionId: lastPayment.transactionId,
+          app: lastPayment.app,
+          date: new Date()
+        });
+      } else {
+        console.warn('No payment details found in session storage');
+        
+        // Generate random transaction ID if none exists
+        const randomTxnId = `STRIPE-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+        
+        // Set default transaction details
+        setTransactionDetails(prev => ({
+          ...prev,
+          transactionId: randomTxnId,
+          date: formatDate(new Date())
+        }));
       }
       
-      // Update transaction details with URL params if available, or fallback to session storage
-      setTransactionDetails((current) => ({
-        ...current,
-        amount: amount || (lastPayment?.amount) || current.amount,
-        to: to || (lastPayment?.merchantName) || current.to,
-        upiId: upiId || (lastPayment?.upiId) || current.upiId,
-        fromUpiId: fromUpiId || (lastPayment?.fromUpiId) || '',
-        transactionId: finalTxnId,
-        date: formattedDate,
-        app: isStripePayment ? 'Credit/Debit Card' : (app || (lastPayment?.app) || current.app)
-      }));
-      
-      // Save transaction to history in local storage
-      const finalAmount = amount || (lastPayment?.amount) || transactionDetails.amount;
-      const finalTo = to || (lastPayment?.merchantName) || transactionDetails.to;
-      const finalUpiId = upiId || (lastPayment?.upiId) || transactionDetails.upiId;
-      const finalFromUpiId = fromUpiId || (lastPayment?.fromUpiId) || '';
-      const finalApp = isStripePayment ? 'Credit/Debit Card' : (app || (lastPayment?.app) || transactionDetails.app);
-      
-      saveTransactionToHistory({
-        amount: finalAmount,
-        to: finalTo,
-        upiId: finalUpiId,
-        fromUpiId: finalFromUpiId,
-        transactionId: finalTxnId,
-        app: finalApp,
-        date: new Date() // Date object for formatting
-      });
-      
-      // Clear the session storage after using it
-      sessionStorage.removeItem('lastPayment');
+      // Clear session storage only after transaction details are loaded
+      // This allows refreshing the page and still seeing the data
+      setTimeout(() => {
+        sessionStorage.removeItem('lastPayment');
+      }, 2000);
       
     } catch (error) {
-      console.error('Error parsing transaction details:', error);
+      console.error('Error getting transaction details:', error);
     }
-  }, [location]);
+  }, []);
 
   // Function to save transaction to history in local storage
   const saveTransactionToHistory = (transaction: TransactionInput) => {
