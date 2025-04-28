@@ -103,14 +103,20 @@ export default function Payment() {
     // Store payment details in session storage for the success screen
     sessionStorage.setItem('lastPayment', JSON.stringify(paymentDetails));
     
-    // Create URL params for success page
+    // Create URL params for success page with all the correct payment info
     const successParams = new URLSearchParams();
-    successParams.append('amount', amount);
+    successParams.append('amount', amount); // Actual entered amount
     successParams.append('app', selectedApp || '');
-    successParams.append('merchantName', merchantName);
-    successParams.append('upiId', upiId);
+    successParams.append('merchantName', merchantName); // Actual merchant name
+    successParams.append('upiId', upiId); // Actual UPI ID
+    successParams.append('fromUpiId', authState.phoneNumber ? `${authState.phoneNumber.replace(/\D/g, '').slice(-10)}@ybl` : 'yourname@okhdfc');
     
-    // Navigate to success screen with more details
+    // Add the user's note if provided
+    if (note) {
+      successParams.append('note', note);
+    }
+    
+    // Navigate to success screen with complete details
     setLocation(`/success?${successParams.toString()}`);
   };
   

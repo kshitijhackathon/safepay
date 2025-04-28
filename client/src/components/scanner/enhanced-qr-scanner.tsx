@@ -196,20 +196,61 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
     } else if (qrData.includes('@')) {
       // Directly a UPI ID (like abc@bank)
       paymentInfo.upi_id = qrData;
-      console.log('Found direct UPI ID:', qrData);
+      
+      // Extract merchant name from UPI ID
+      const merchantFromUpi = qrData.split('@')[0];
+      if (merchantFromUpi) {
+        // Convert camelCase or snake_case to Title Case with spaces
+        const formattedName = merchantFromUpi
+          .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+          .replace(/_/g, ' ') // Replace underscores with spaces
+          .replace(/^\w/, (c) => c.toUpperCase()) // Capitalize first letter
+          .trim(); // Remove leading/trailing spaces
+          
+        paymentInfo.name = formattedName;
+      }
+      
+      console.log('Found direct UPI ID:', qrData, 'with merchant name:', paymentInfo.name);
     } else {
       // Try to check if the QR contains text with a UPI ID in it
       // Use enhanced regex pattern to detect more UPI formats
       const match = qrData.match(/([a-zA-Z0-9\.\_\-]+@[a-zA-Z0-9]+)/);
       if (match && match[1]) {
         paymentInfo.upi_id = match[1];
-        console.log('Extracted UPI ID from text:', match[1]);
+        
+        // Extract merchant name from UPI ID
+        const merchantFromUpi = match[1].split('@')[0];
+        if (merchantFromUpi) {
+          // Convert camelCase or snake_case to Title Case with spaces
+          const formattedName = merchantFromUpi
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/_/g, ' ')
+            .replace(/^\w/, (c) => c.toUpperCase())
+            .trim();
+            
+          paymentInfo.name = formattedName;
+        }
+        
+        console.log('Extracted UPI ID from text:', match[1], 'with merchant name:', paymentInfo.name);
       } else {
         // Try again with a more lenient pattern
         const secondTry = qrData.match(/([^\s\/]+@[^\s\/]+)/);
         if (secondTry && secondTry[1] && secondTry[1].includes('@')) {
           paymentInfo.upi_id = secondTry[1];
-          console.log('Extracted UPI ID with lenient pattern:', secondTry[1]);
+          
+          // Extract merchant name from UPI ID
+          const merchantFromUpi = secondTry[1].split('@')[0];
+          if (merchantFromUpi) {
+            const formattedName = merchantFromUpi
+              .replace(/([A-Z])/g, ' $1')
+              .replace(/_/g, ' ')
+              .replace(/^\w/, (c) => c.toUpperCase())
+              .trim();
+              
+            paymentInfo.name = formattedName;
+          }
+          
+          console.log('Extracted UPI ID with lenient pattern:', secondTry[1], 'with merchant name:', paymentInfo.name);
         } else {
           console.log('No UPI pattern found, using raw data:', qrData);
           
@@ -217,6 +258,17 @@ export const EnhancedQRScanner = forwardRef<QRScannerHandle, QRScannerProps>(
           const cleaned = qrData.trim().replace(/\s+/g, '');
           if (cleaned.length > 0) {
             paymentInfo.upi_id = cleaned;
+            // Try to extract a name if possible
+            if (cleaned.includes('@')) {
+              const possibleName = cleaned.split('@')[0];
+              if (possibleName) {
+                paymentInfo.name = possibleName
+                  .replace(/([A-Z])/g, ' $1')
+                  .replace(/_/g, ' ')
+                  .replace(/^\w/, (c) => c.toUpperCase())
+                  .trim();
+              }
+            }
           } else {
             paymentInfo.upi_id = 'unknown'; // Use a placeholder so the app doesn't crash
             

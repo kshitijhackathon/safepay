@@ -40,10 +40,10 @@ interface TransactionHistoryItem {
 export default function Success() {
   const [location, setLocation] = useLocation();
   const [transactionDetails, setTransactionDetails] = useState<TransactionDetails>({
-    amount: '850.00',
-    to: 'City Supermarket',
-    upiId: 'citysupermarket@upi',
-    fromUpiId: 'yourname@okhdfc',
+    amount: '0.00',
+    to: '',
+    upiId: '',
+    fromUpiId: '',
     transactionId: `UPI${Date.now().toString().substring(5)}`,
     date: new Date().toLocaleString('en-US', {
       day: 'numeric',

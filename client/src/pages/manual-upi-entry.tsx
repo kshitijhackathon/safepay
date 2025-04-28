@@ -28,11 +28,24 @@ export default function ManualUpiEntry() {
     
     setIsProcessing(true);
     
+    // Extract merchant name from UPI ID
+    const merchantFromUpi = processedUpiId.split('@')[0];
+    let merchantName = 'Merchant';
+    
+    if (merchantFromUpi) {
+      // Convert camelCase or snake_case to Title Case with spaces
+      merchantName = merchantFromUpi
+        .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+        .replace(/_/g, ' ') // Replace underscores with spaces
+        .replace(/^\w/, (c) => c.toUpperCase()) // Capitalize first letter
+        .trim(); // Remove leading/trailing spaces
+    }
+    
     // Create a payment info object
     let paymentInfo = {
       upi_id: processedUpiId,
-      name: 'Merchant',
-      amount: '100',
+      name: merchantName,
+      amount: '',  // Let user fill this on the payment page
       currency: 'INR',
       ml_risk_score: 0,
       ml_risk_level: 'Low' as 'Low' | 'Medium' | 'High',
