@@ -16,7 +16,7 @@ COPY requirements*.txt ./
 
 # Install dependencies
 RUN npm ci
-RUN pip3 install -r requirements.txt
+# RUN pip3 install -r requirements.txt
 RUN pip3 install -r requirements_qr.txt
 RUN python -m pip install fastapi uvicorn pandas numpy scikit-learn joblib torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
